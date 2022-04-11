@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-from solicitudes.base_datos import POSTGRES
+from solicitudes.base_datos import *
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'solicitudes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = POSTGRES
+DATABASES = SQLITE
 
 
 # Password validation
