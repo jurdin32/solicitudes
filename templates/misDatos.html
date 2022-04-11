@@ -1,0 +1,109 @@
+{% extends 'index.html' %}
+{% block principal %}
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Datos del Usuario</h3>
+        </div>
+        <div class="card-body">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" value="{{ request.session.nombres }}" name="nombres" class="form-control"
+                                   placeholder="Nombres completos">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" value="{{ request.session.apellidos }}" name="apellidos"
+                                   class="form-control" placeholder="Apellidos Completos">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                            </div>
+                            <input type="text" readonly="readonly" value="{{ user.username }}" name="cedula" class="form-control"
+                                   placeholder="Cédula">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="font-weight: bold">C</span>
+                            </div>
+                            <input type="text" value="{{ request.session.cargo }}" name="cargo" class="form-control"
+                                   placeholder="Cargo">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="font-weight: bold">D</span>
+                            </div>
+                            <input type="text" value="{{ request.session.direccion }}" name="direccion"
+                                   class="form-control"
+                                   placeholder="Ingrese la dirección a la cual pertenece">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="font-weight: bold">J</span>
+                            </div>
+                            <input type="text" value="{{ request.session.jefe }}" name="jefe" class="form-control"
+                                   placeholder="Ingrese el nombre de su jefe inmediato">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="font-weight: bold">TH</span>
+                            </div>
+                            <input type="text" readonly="readonly" name="directorth" class="form-control"
+                                   value="{{ request.session.director }}"
+                                   placeholder="Ingrese el nombre de su jefe inmediato">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-primary" type="submit" style="width: 100%"><i class="fa fa-save"></i>
+                            Registrar datos
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <!-- /.card-body -->
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                Swal.fire({
+                    position: 'top-end',
+                    icon: '{{ message.tags }}',
+                    title: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 3000,
+                })
+            </script>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
