@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitud No: {{ permiso.numero_solicitud }}</title>
+</head>
+<body>
+<table>
+    <tr style="text-align: center">
+        <td colspan="4" style="font-size: 20px">GOBIERNO MUNICIPAL DEL CANTÓN EL GUABO</td>
+    </tr>
+    <tr style="text-align: center">
+        <td colspan="4"><h2>CREADO POR D.S. 2834 DEL 30 DE AGOSTO DEL 1978</h2></td>
+    </tr>
+    <tr style="text-align: center">
+        <td colspan="4">
+            <h2>solicitud de permiso No. {{ permiso.numero_solicitud }}</h2>
+        </td>
+    </tr>
+</table>
+<br><br>
+<table style="font-size: 12px; padding-top: 5px; border:1px solid black; padding: 5px">
+    <tr>
+        <td>NOMBRES: </td>
+        <td colspan="3">{{ permiso.persona }}</td>
+    </tr>
+    <tr>
+        <td>CARGO: </td>
+        <td colspan="3">{{ permiso.persona.cargo }}</td>
+    </tr>
+    <tr>
+        <td>DIRECCION: </td>
+        <td colspan="3">{{ permiso.persona.direccion }}</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: center; font-weight: bold">TIEMPO</td>
+        <td colspan="2" style="text-align: center; font-weight: bold">RAZÓN</td>
+    </tr>
+    <tr>
+        <td>Días {{ permiso.dias }}</td>
+        <td>Horas: {{ permiso.cantidad_horas }}</td>
+        <td>Particular</td>
+        <td style="width: 100px; text-align: center">{% if permiso.particular %}X{% endif %}</td>
+    </tr>
+    <tr>
+        <td>Fecha de Salida</td>
+        <td>{% if permiso.fecha_salida %}{{ permiso.fecha_salida }}{% else %} {% endif %}</td>
+        <td>Calamidad doméstica</td>
+        <td style="width: 100px; text-align: center">{% if permiso.calamidad_domestica %}X{% endif %}</td>
+    </tr>
+    <tr>
+        <td>Fecha de Entrada</td>
+        <td>{% if permiso.fecha_entrada %}{{ permiso.fecha_entrada }}{% else %} {% endif %}</td>
+        <td>Enfermedad</td>
+        <td style="width: 100px; text-align: center">{% if permiso.enfermedad %}X{% endif %}</td>
+    </tr>
+    <tr>
+        <td>Hora de Salida</td>
+        <td>{% if permiso.hora_salida %}{{ permiso.hora_salida }}{% else %} {% endif %}</td>
+        <td>Otros</td>
+        <td style="width: 100px; text-align: center">{% if permiso.otros %}X{% endif %}</td>
+    </tr>
+    <tr>
+        <td>Hora de Entrada</td>
+        <td>{% if permiso.hora_entrada %}{{ permiso.hora_entrada }}{% else %} {% endif %}</td>
+        <td colspan="2">{{ permiso.otro }}</td>
+    </tr>
+    <tr>
+        <td>Fecha de la Solicitud</td>
+        <td colspan="3">{{ permiso.fecha }}</td>
+    </tr>
+    <tr>
+        <td colspan="4" style="text-align: justify">Observaciones
+            <br>
+        {% if permiso.observaciones %}{{ permiso.observaciones }}{% else %}Sin Observación{% endif %}
+        </td>
+    </tr>
+
+</table>
+<table style="text-align: center; font-size: 12px">
+    <tr>
+        <td style="padding-top: 40px">
+            ____________________________
+            <br>
+            Servidor
+            <br>
+            {{ permiso.persona }}
+
+        </td>
+        <td style="padding-top: 40px">
+            ____________________________
+            <br>
+            Jefe Inmediato
+            <br>
+            {{ permiso.persona.jefe_inmediato }}
+
+        </td>
+        <td style="padding-top: 40px">
+            ____________________________
+            <br>
+            Director de Talento Humano
+            <br>
+            {{ permiso.persona.director_th }}
+        </td>
+    </tr>
+</table>
+</body>
+</html>

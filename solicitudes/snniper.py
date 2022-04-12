@@ -1,16 +1,36 @@
 import datetime
 
 from django.db.models import Sum
+from io import  BytesIO
+import os
 
+from django.conf import settings
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from django.http import HttpResponse
 
 def Attr(cls):
     model= cls.__name__
     return cls.__doc__.replace(model,"").replace("(","").replace(")","").replace(" ","").split(",")
 
+def fetch_resources(uri, rel):
+    path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    return path
+
+
+def render_to_pdf(template_src,context_dict={}):
+    template=get_template(template_src)
+    html=template.render(context_dict)
+    result=BytesIO()
+    pisa.pisaDocument(BytesIO(html.encode("utf8")),result,link_callback=fetch_resources)
+    return HttpResponse(result.getvalue(),content_type="application/pdf")
+
+
+
 def convertir_horas(hora,minuto):
     fraccionhora=minuto/60
     total=(fraccionhora+hora)/8
-    print("total de dias es:",total)
+    #print("total de dias es:",total)
     return total
 
 def sumatoriaHoras(lista):
@@ -34,8 +54,8 @@ def estadistica_mes(lista,anio=datetime.datetime.now().year):
     for x in range(1,13):
         mes=lista.filter(fecha__month=x ,fecha__year=anio)
         meses.append(int(sumatoriaHoras(mes).split(":")[0]))
-        print("estadistica horas:",x,sumatoriaHoras(mes).split(":")[0])
-    print(meses)
+        #print("estadistica horas:",x,sumatoriaHoras(mes).split(":")[0])
+    #print(meses)
     return meses
 
 def estadistica_dias(lista,anio=datetime.datetime.now().year):
@@ -47,6 +67,6 @@ def estadistica_dias(lista,anio=datetime.datetime.now().year):
         else:
             dias.append(0)
 
-    print(dias)
+    #print(dias)
     return dias
 

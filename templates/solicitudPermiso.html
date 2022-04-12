@@ -23,6 +23,7 @@
                 <th>Motivo</th>
                 <th>Horas</th>
                 <th>Días</th>
+                <th>Documento</th>
                 </thead>
                 <tbody>
                 {% for solicitud in solicitudes %}
@@ -58,6 +59,7 @@
                         </td>
                         <td>{{ solicitud.cantidad_horas }}</td>
                         <td>{{ solicitud.dias }}</td>
+                        <td style="text-align: center"><a href="/documento/{{ solicitud.id }}/"><i class="fa fa-file-pdf"></i></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

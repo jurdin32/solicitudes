@@ -6,7 +6,7 @@ from django.db.models import Sum
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from Permisos.models import *
-from solicitudes.snniper import sumatoriaHoras, estadistica_mes, estadistica_dias
+from solicitudes.snniper import sumatoriaHoras, estadistica_mes, estadistica_dias, render_to_pdf
 
 
 def logout_(request):
@@ -183,4 +183,9 @@ def solicitud_permisos(request):
 def solicitud_materiales(request):
     return render(request,'index.html')
 
-colores=['rgb(165, 42, 42)','rgb(255, 248, 220)','	rgb(0, 0, 139)','	rgb(139, 0, 139)']
+
+def permiso_pdf(request,id):
+    contexto={
+        'permiso':SolicitudPermiso.objects.get(id=id),
+    }
+    return render_to_pdf('permisopdf.html',contexto)

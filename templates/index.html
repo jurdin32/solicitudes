@@ -131,7 +131,7 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner" style="text-align: center">
-                                <h3>{{ request.session.dias }}</h3>
+                                <h3>{{ request.session.dias|floatformat:2 }}</h3>
                                 <p>Permisos en días</p>
                             </div>
                         </div>
