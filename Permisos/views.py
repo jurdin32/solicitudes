@@ -57,6 +57,7 @@ def register(request):
                 first_name=request.POST.get('nombres'),
                 last_name=request.POST.get('apellidos'),
                 is_active=True,
+
             )
             user.set_password(request.POST.get('password'))
             user.save()
