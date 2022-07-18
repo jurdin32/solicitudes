@@ -3,7 +3,8 @@ import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
-from solicitudes.snniper import convertir_horas
+from solicitudes.snniper import convertir_horas, generarCodigoQRJefe
+
 
 class Anios(models.Model):
     anio=models.IntegerField(default=datetime.datetime.now().year)
@@ -18,6 +19,13 @@ class Configuracion(models.Model):
 
     class Meta:
         verbose_name_plural='1. Configuración'
+
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        generarCodigoQRJefe(self.nombre_director_th,self.nombre_director_th)
+        
+        super(Configuracion, self).save()
 
 
 class Funcionarios(models.Model):

@@ -86,18 +86,29 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            {% if not request.user.is_staff %}
                             <li class="nav-item">
                                 <a href="{% url 'datos' %}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Mis datos</p>
                                 </a>
                             </li>
+                            {% endif %}
+
                             <li class="nav-item">
                                 <a href="{% url 'permisos' %}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Solicitud de Permisos</p>
                                 </a>
                             </li>
+                            {% if request.user.is_staff %}
+                                <li class="nav-item">
+                                <a href="{% url 'permisosfuncionario' %}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Permisos Funcionario</p>
+                                </a>
+                            </li>
+                            {% endif %}
                             <li class="nav-item">
                                 <a href="{% url 'materiales' %}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
@@ -292,7 +303,6 @@
                 ]
 
             }
-
             var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
             var pieChartData = $.extend(true, {}, areaChartData)
             pieChartData.datasets[0] = pieAreaChartData.datasets[0]

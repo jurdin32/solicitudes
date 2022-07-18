@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Solicitud No: {{ permiso.numero_solicitud }}</title>
@@ -79,26 +80,20 @@
 </table>
 <table style="text-align: center; font-size: 12px">
     <tr>
-        <td style="padding-top: 40px">
-            ____________________________
-            <br>
-            Servidor
+        <td style="padding-top: 20px">
+            <img src="/media/qr/{{ permiso.persona.user.username }}.png" style="width: 100px" alt="">
             <br>
             {{ permiso.persona }}
 
         </td>
-        <td style="padding-top: 40px">
-            ____________________________
-            <br>
-            Jefe Inmediato
+        <td style="padding-top: 20px">
+            <img src="/media/qr/{{ permiso.persona.jefe_inmediato }}.png" style="width: 100px" alt="">
             <br>
             {{ permiso.persona.jefe_inmediato }}
 
         </td>
-        <td style="padding-top: 40px">
-            ____________________________
-            <br>
-            Director de Talento Humano
+        <td style="padding-top: 20px">
+            <img src="/media/qr/{{ permiso.persona.director_th }}.png" style="width: 100px" alt="">
             <br>
             {{ permiso.persona.director_th }}
         </td>

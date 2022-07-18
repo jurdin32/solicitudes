@@ -1,5 +1,7 @@
 import datetime
+from os import path
 
+import qrcode
 from django.db.models import Sum
 from io import  BytesIO
 import os
@@ -8,6 +10,9 @@ from django.conf import settings
 from xhtml2pdf import pisa
 from django.template.loader import get_template
 from django.http import HttpResponse
+
+from solicitudes.settings import BASE_DIR
+
 
 def Attr(cls):
     model= cls.__name__
@@ -30,7 +35,7 @@ def render_to_pdf(template_src,context_dict={}):
 def convertir_horas(hora,minuto):
     fraccionhora=minuto/60
     total=(fraccionhora+hora)/8
-    #print("total de dias es:",total)
+    print("total de dias es:",total)
     return total
 
 def sumatoriaHoras(lista):
@@ -46,27 +51,51 @@ def sumatoriaHoras(lista):
         horas+=int(tt)
         mod=minutos%60
         minutos=mod
-    #print("horas",horas,"minutos",minutos)
+    if horas==0 and minutos==0:
+        return "00:00:00"
+    print("Son: %s:%s:00"%(str.zfill(str(int(horas)),2),str.zfill(str(int(minutos)),2)))
     return "%s:%s:00"%(str.zfill(str(int(horas)),2),str.zfill(str(int(minutos)),2))
 
 def estadistica_mes(lista,anio=datetime.datetime.now().year):
     meses=[]
     for x in range(1,13):
-        mes=lista.filter(fecha__month=x ,fecha__year=anio)
+        mes=lista.filter(fecha_salida__month=x ,fecha_salida__year=anio)
         meses.append(int(sumatoriaHoras(mes).split(":")[0]))
-        #print("estadistica horas:",x,sumatoriaHoras(mes).split(":")[0])
-    #print(meses)
     return meses
 
 def estadistica_dias(lista,anio=datetime.datetime.now().year):
     dias=[]
     for x in range(1,13):
-        dia=lista.filter(fecha__month=x ,fecha__year=anio).aggregate(Sum('dias'))
+        dia=lista.filter(fecha_salida__month=x ,fecha_salida__year=anio).aggregate(Sum('dias'))
         if dia["dias__sum"]!=None:
             dias.append(float(dia["dias__sum"]))
         else:
             dias.append(0)
-
-    #print(dias)
+    print(dias)
     return dias
 
+def generarCodigoQR(cedula,nombres, apellidos,cargo,unidad):
+    ruta=path.join(BASE_DIR,'media/qr/%s.png'%cedula)
+    img = qrcode.make(
+        """ 
+        CEDULA: %s
+        NOMBRE: %s
+        CARGO:  %s
+        UNIDAD: %s
+        """%(cedula,nombres+" "+apellidos,cargo,unidad)
+    )
+    f = open(ruta, "wb")
+    img.save(f)
+    f.close()
+
+def generarCodigoQRJefe(nombres,unidad):
+    ruta=path.join(BASE_DIR,'media/qr/%s.png'%nombres)
+    img = qrcode.make(
+        """
+         NOMBRE: %s
+         UNIDAD: %s
+        """%(nombres,unidad)
+    )
+    f = open(ruta, "wb")
+    img.save(f)
+    f.close()

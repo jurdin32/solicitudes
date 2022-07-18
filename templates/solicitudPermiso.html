@@ -6,11 +6,23 @@
     <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
 {% endblock %}
 {% block principal %}
-    <a href="#" class="btn btn-default" data-toggle="modal" data-target="#modal-register">Registrar Nueva</a>
+    <div class="row">
+        {% if not request.user.is_staff %}
+            <div class="col-md-1">
+                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#modal-register">Registrar</a>
+            </div>
+        {% endif %}
+        {% for anio in anios %}
+            <div class="col-md-1">
+                <a href="/permisos/?anio={{ anio }}" class="btn btn-default" style="width: 100%">{{ anio }}</a>
+            </div>
+        {% endfor %}
+    </div>
+
     <div class="card card-info" style="margin-top: 20px">
         <div class="card-header">
-            <h3 class="card-title">Registros del Usuario - </h3>
-
+            <h3 class="card-title">{% if request.user.is_staff %}Registro de todos los usuarios{% else %}Registros del
+                Usuario{% endif %}</h3>
         </div>
         <div class="card-body">
             <table class="table table-striped table-bordered" id="tabla">
@@ -23,19 +35,19 @@
                 <th>Motivo</th>
                 <th>Horas</th>
                 <th>Días</th>
-                <th>Documento</th>
+                <th>{% if request.user.is_staff %}Funcionario{% else %}Documento{% endif %}</th>
                 </thead>
                 <tbody>
                 {% for solicitud in solicitudes %}
                     <tr>
-                        <td>{{ solicitud.fecha }}</td>
+                        <td>{{ solicitud.fecha|date:"d/M/Y" }}</td>
                         <td>
                             {% if solicitud.fecha_salida %}
-                                {{ solicitud.fecha_salida }}
+                                {{ solicitud.fecha_salida|date:"d/M/Y" }}
                             {% endif %}
                         </td>
                         <td>{% if solicitud.fecha_entrada %}
-                            {{ solicitud.fecha_entrada }}
+                            {{ solicitud.fecha_entrada|date:"d/M/Y" }}
                         {% endif %}
                         </td>
                         <td>{% if solicitud.hora_salida %}
@@ -59,7 +71,10 @@
                         </td>
                         <td>{{ solicitud.cantidad_horas }}</td>
                         <td>{{ solicitud.dias }}</td>
-                        <td style="text-align: center"><a href="/documento/{{ solicitud.id }}/"><i class="fa fa-file-pdf"></i></a></td>
+                        <td style="text-align: center">
+                            {% if request.user.is_staff %}{{ solicitud.persona }}{% else %}
+                                <a target="_blank" href="/documento/{{ solicitud.id }}/"><i class="fa fa-file-pdf"></i></a>{% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

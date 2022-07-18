@@ -13,7 +13,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" value="{{ request.session.nombres }}" name="nombres" class="form-control"
+                            <input type="text" value="{{ request.session.nombres }}" required="required" name="nombres" class="form-control"
                                    placeholder="Nombres completos">
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" value="{{ request.session.apellidos }}" name="apellidos"
+                            <input type="text" required="required" value="{{ request.session.apellidos }}" name="apellidos"
                                    class="form-control" placeholder="Apellidos Completos">
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" style="font-weight: bold">C</span>
                             </div>
-                            <input type="text" value="{{ request.session.cargo }}" name="cargo" class="form-control"
+                            <input type="text" value="{{ request.session.cargo }}" required="required" name="cargo" class="form-control"
                                    placeholder="Cargo">
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" style="font-weight: bold">J</span>
                             </div>
-                            <input type="text" value="{{ request.session.jefe }}" name="jefe" class="form-control"
+                            <input type="text" value="{{ request.session.jefe }}" required="required" name="jefe" class="form-control"
                                    placeholder="Ingrese el nombre de su jefe inmediato">
                         </div>
                     </div>
